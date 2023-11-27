@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const ourForm = document.querySelector('#ourForm');
     const regSSN = /^\d\d\d-\d\d-\d\d\d\d$/;
     const regZIP = /^\d\d\d\d\d$/;
-    const regPhone = /^\d\d\d-\d\d\d-\d\d\d\d$/;
+    const regPhone = /^.{14}$/;
     const regEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     
-
+ /* testing*/
     //start checks for General info section
     var nameValidBool = false;
     checkInput("firstName","nameValid","nameValidBool");
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     checkRegXInput("SSN","SSNValid","SSNValidBool","input",regSSN);
 
     var phoneValidBool = false;
-    checkRegXInput("phoneNumber","phoneValid","phoneValidBool","input",regPhone);
+    checkRegXInput("phoneNumber", "phoneValid", "phoneValidBool", "input", regPhone);
 
     var altphoneValidBool = false;
     checkRegXInput("altPhoneNumber","altPhoneValid","altphoneValidBool","input",regPhone);
@@ -358,6 +358,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+    
+
 
     //start Degree input secript
  
@@ -539,7 +541,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if(
             window["nameValidBool"] & window["SSNValidBool"] 
-            & window["phoneValidBool"] & window["altphoneValidBool"]
+            & window["phoneValidBool"] 
             &window["emailValidBool"] & window["streetAddressValidBool"] 
             & window["cityAddressValidBool"] & window["stateAddressVaildBool"]
             & window["zipValidBool"] & window["moveInDateValidBool"]
@@ -600,5 +602,51 @@ document.addEventListener("DOMContentLoaded", function () {
       previousWidth = window.innerWidth;
     }
 
+    
+    
 
 });
+//Masking Functions
+
+function maskNumeric(input) {
+    // Remove non-numeric characters using regex
+    input.value = input.value.replace(/[^0-9]/g, '');
+}
+function maskSSN(input) {
+    // Remove non-numeric characters using regex
+    var cleanedInput = input.value.replace(/\D/g, '');
+
+    // Apply SSN format (XXX-XX-XXXX)
+    if (cleanedInput.length > 5) {
+        cleanedInput = cleanedInput.substring(0, 3) + '-' + cleanedInput.substring(3, 5) + '-' + cleanedInput.substring(5, 9);
+    } else if (cleanedInput.length > 3) {
+        cleanedInput = cleanedInput.substring(0, 3) + '-' + cleanedInput.substring(3, 5);
+    }
+
+    // Update the input value
+    input.value = cleanedInput;
+
+}
+function maskPhoneNumber(input) {
+    // Remove non-numeric characters using regex
+    var cleanedInput = input.value.replace(/\D/g, '');
+
+    // Apply phone number format (XXX) XXX-XXXX
+    if (cleanedInput.length >= 10) {
+        cleanedInput = '(' + cleanedInput.substring(0, 3) + ') ' + cleanedInput.substring(3, 6) + '-' + cleanedInput.substring(6, 10);
+    } 
+
+    // Update the input value
+    input.value = cleanedInput;
+}
+function maskZipCode(input) {
+    // Remove non-numeric characters using regex
+    var cleanedInput = input.value.replace(/\D/g, '');
+
+    // Enforce 5-digit limit
+    cleanedInput = cleanedInput.substring(0, 5);
+
+    // Update the input value
+    input.value = cleanedInput;
+}
+
