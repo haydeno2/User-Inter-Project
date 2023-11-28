@@ -541,7 +541,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if(
             window["nameValidBool"] & window["SSNValidBool"] 
-            & window["phoneValidBool"] 
+            & window["phoneValidBool"]
             &window["emailValidBool"] & window["streetAddressValidBool"] 
             & window["cityAddressValidBool"] & window["stateAddressVaildBool"]
             & window["zipValidBool"] & window["moveInDateValidBool"]
